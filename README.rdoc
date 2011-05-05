@@ -1,0 +1,15 @@
+Code generation with a repository for generators.
+
+Commands for version 0.0.1:
+
+gen build <genspec>
+gen help <generator>
+gen install <generator>
+gen list
+gen push <generator file>
+gen run <generator>
+gen uninstall <generator>
+
+Future features:
+
+Gensets
