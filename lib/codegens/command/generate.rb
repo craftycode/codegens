@@ -1,26 +1,41 @@
 module Codegens
   module Command
-    module Generate
-      def self.execute(name)
-        template_path = File.join(name, 'template')
-        Codegens.directory_contents(template_path).each do |content|
-          create_content(template_path, "", content, [name])
+    class Generate
+      CURRENT_DIRECTORY = ""
+
+      attr_accessor :template_args, :template_name, :template_path
+
+      def initialize(name)
+        self.template_name = name
+        self.template_path = Codegens.generator_path(File.join(name, 'template'))
+        self.template_args = [name]
+      end
+
+      def create_content(relative_template_path, relative_content_path, content)
+        if File.directory?(File.join(template_path, relative_template_path, content))
+          relative_content_path = create_directory(relative_content_path, content)
+          render_directory(File.join(relative_template_path, content), relative_content_path)
         end
       end
 
-      def self.create_content(template_path, content_path, content, args)
-        if File.directory?(Codegens.generator_path(File.join(template_path, content)))
-          content_path = create_directory(File.join(content_path, content), args)
+      def create_directory(relative_content_path, path)
+        while /arg(\d+)/.match(path)
+          path = path.gsub("arg#{$1}", template_args[$1.to_i])
         end
-      end
-
-      def self.create_directory(pattern, args)
-        path = pattern
-        /arg(\d+)/.match(pattern).to_a[1..-1].each do |match|
-          path.gsub!("arg#{match}", args[match.to_i])
-        end
+        path = File.join(relative_content_path, path)
         Dir.mkdir(Codegens.generation_path(path))
+
         return path
+      end
+
+      def execute
+        render_directory(CURRENT_DIRECTORY, CURRENT_DIRECTORY)
+      end
+
+      def render_directory(relative_template_path, relative_content_path)
+        Codegens.directory_contents(File.join(template_path, relative_template_path)).each do |content|
+          create_content(relative_template_path, relative_content_path, content)
+        end
       end
     end
   end

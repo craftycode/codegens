@@ -4,7 +4,7 @@ module Codegens
 
     desc "generate NAME", "Generate files and/or directories."
     def generate(name)
-      Codegens::Command::Generate.execute(name)
+      Codegens::Command::Generate.new(name).execute
     end
   end
 end

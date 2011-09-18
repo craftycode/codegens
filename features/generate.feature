@@ -7,3 +7,4 @@ Feature: Generate code
     When I run `gen generate foo`
     Then the exit status should be 0
     And a directory named "foo" should exist
+    And a directory named "foo/lib" should exist

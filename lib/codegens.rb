@@ -9,7 +9,7 @@ module Codegens
   end
 
   def self.directory_contents(path)
-    Dir.new(Codegens.generator_path(path)).reject{|content| content =~ /^\./ }
+    Dir.new(path).reject{|content| content =~ /^\./ }
   end
 
   def self.generation_path(path)
