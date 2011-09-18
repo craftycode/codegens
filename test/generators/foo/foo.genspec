@@ -16,6 +16,6 @@
     {id: "author", text: "Who is the author of this gem?"},
     {id: "email", text: "What is the author's email?"},
     {id: "homepage", text: "What is this gem's home page?"},
-    {id: "executable", text: "If this gem has an executable command, enter it now."}
+    {id: "executable", text: "If this gem has an executable command, enter it now, otherwise press return."}
   ]
 }
