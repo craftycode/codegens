@@ -12,10 +12,16 @@ def generation_path(path)
   Codegens.generation_path(path)
 end
 
+def clean_up
+  Dir.new(Codegens.generation_path("")).each do |name|
+    FileUtils.rm_rf(Codegens.generation_path(name)) unless ['.', '..'].include?(name)
+  end
+end
+
 MiniTest::Unit::TestCase.add_setup_hook do
-  Codegens.clean_up
+  clean_up
 end
 
 MiniTest::Unit::TestCase.add_teardown_hook do
-  Codegens.clean_up
+  clean_up
 end

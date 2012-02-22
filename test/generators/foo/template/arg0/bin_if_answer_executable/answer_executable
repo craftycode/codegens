@@ -9,4 +9,4 @@ require 'rubygems'
 require '<%= args[0] %>'
 require '<%= args[0] %>/cli'
 
-<%= args[0].classify %>::CLI.start
+<%= Codegens.classify(args[0]) %>::CLI.start

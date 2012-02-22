@@ -1,5 +1,5 @@
 require 'thor'
 
-module <%= args[0].classify %>
+module <%= Codegens.classify(args[0]) %>
 
 end

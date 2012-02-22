@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
   s.files = `git ls-files`.split("\n")
   s.test_files = `git ls-files -- {test}/*`.split("\n")
   
-  <% unless answers[:executable].empty? %>
+  <% unless answers[:executable].nil? or answers[:executable].blank? %>
   s.bindir = "bin"
   s.executables = ["<%= answers[:executable] %>"]
   s.default_executable = "<%= answers[:executable] %>"

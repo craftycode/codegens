@@ -1,3 +1,5 @@
+require 'erb'
+
 module Codegens
   module Command
     class Generate
@@ -11,10 +13,16 @@ module Codegens
         self.template_args = [name]
       end
 
+      def answers
+        @answers ||= {:author => "Yehuda Katz"}
+      end
+
       def create_content(relative_template_path, relative_content_path, content)
         if File.directory?(File.join(template_path, relative_template_path, content))
           relative_content_path = create_directory(relative_content_path, content)
           render_directory(File.join(relative_template_path, content), relative_content_path)
+        else
+          create_file(relative_template_path, relative_content_path, content)
         end
       end
 
@@ -26,6 +34,16 @@ module Codegens
         Dir.mkdir(Codegens.generation_path(path))
 
         return path
+      end
+
+      def create_file(relative_template_path, relative_content_path, file_name)
+        source_path = File.join(template_path, relative_template_path, file_name)
+        destination_path = Codegens.generation_path(File.join(relative_content_path, file_name))
+        
+        args = template_args
+        File.open(destination_path, 'w') do |f|
+          f.puts(ERB.new(File.read(source_path)).result(binding))
+        end
       end
 
       def execute
