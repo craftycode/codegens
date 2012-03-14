@@ -5,16 +5,13 @@ module Codegens
     class Generate
       CURRENT_DIRECTORY = ""
 
-      attr_accessor :template_args, :template_name, :template_path
+      attr_accessor :template_args, :template_name, :template_path, :template_answers
 
-      def initialize(name)
+      def initialize(name, args, answers)
         self.template_name = name
         self.template_path = Codegens.generator_path(File.join(name, 'template'))
-        self.template_args = [name]
-      end
-
-      def answers
-        @answers ||= {:author => "Yehuda Katz"}
+        self.template_args = args
+        self.template_answers = answers
       end
 
       def create_content(relative_template_path, relative_content_path, content)
@@ -40,7 +37,8 @@ module Codegens
         source_path = File.join(template_path, relative_template_path, file_name)
         destination_path = Codegens.generation_path(File.join(relative_content_path, file_name))
         
-        args = template_args
+        args = self.template_args
+        answers = self.template_answers
         File.open(destination_path, 'w') do |f|
           f.puts(ERB.new(File.read(source_path)).result(binding))
         end
