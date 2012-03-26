@@ -10,13 +10,13 @@ Feature: Generate code
     And I type "Yehuda Katz"
     And I type "yehuda@katz.com"
     And I type "http://www.katz.com/foobar"
-    And I type "bar"
+    And I type "do_bar"
 
     Then the exit status should be 0
     And a directory named "bar" should exist
 
     And a directory named "bar/bin" should exist
-    And a file named "bar/bin/bar" should exist
+    And a file named "bar/bin/do_bar" should exist
 
     And a directory named "bar/lib" should exist
 
@@ -40,7 +40,20 @@ Feature: Generate code
     And the output should contain "What is this gem's home page?"
     And the file "bar/bar.gemspec" should contain "http://www.katz.com/foobar"
     And the output should contain "If this gem has an executable command, enter it now, otherwise press return."
-    And the file "bar/bar.gemspec" should contain "bar"
+    And the file "bar/bar.gemspec" should contain "do_bar"
+
+  Scenario: Generate a project with an empty conditional
+    When I run `gen generate foo bar` interactively
+    And I type "The purpose is to sparkle and shine."
+    And I type "You have never seen foo bar like this before and, trust me, you want some of this."
+    And I type "Yehuda Katz"
+    And I type "yehuda@katz.com"
+    And I type "http://www.katz.com/foobar"
+    And I type ""
+
+    Then the exit status should be 0
+    And a directory named "bar" should exist
+    And a directory named "bar/bin" should not exist
 
   Scenario: Generate a project with generate as the default command
     When I run `gen simple` interactively
