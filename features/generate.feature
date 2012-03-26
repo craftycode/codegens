@@ -11,10 +11,19 @@ Feature: Generate code
     And I type "yehuda@katz.com"
     And I type "http://www.katz.com/foobar"
     And I type "bar"
-    Then the output should contain "Summarize this gem's purpose"
-    And a file named "bar/bar.gemspec" should exist
+    Then a file named "bar/bar.gemspec" should exist
+    And the output should contain "Summarize this gem's purpose"
     And the file "bar/bar.gemspec" should contain "The purpose is to sparkle and shine."
     And the output should contain "Fully describe the purpose of this gem"
+    And the file "bar/bar.gemspec" should contain "You have never seen foo bar like this before and, trust me, you want some of this."
+    And the output should contain "Who is the author of this gem?"
+    And the file "bar/bar.gemspec" should contain "Yehuda Katz"
+    And the output should contain "What is the author's email?"
+    And the file "bar/bar.gemspec" should contain "yehuda@katz.com"
+    And the output should contain "What is this gem's home page?"
+    And the file "bar/bar.gemspec" should contain "http://www.katz.com/foobar"
+    And the output should contain "If this gem has an executable command, enter it now, otherwise press return."
+    And the file "bar/bar.gemspec" should contain "bar"
     And the exit status should be 0
     And a directory named "bar" should exist
     And a directory named "bar/lib" should exist
