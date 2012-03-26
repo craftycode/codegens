@@ -34,6 +34,8 @@ module Codegens
         source_path = File.join(template_path, relative_template_path, file_name)
         destination_path = Codegens.generation_path(File.join(relative_content_path, interpret(file_name)))
         
+        args = self.template_args
+        answers = self.template_answers
         File.open(destination_path, 'w') do |f|
           f.puts(ERB.new(File.read(source_path)).result(binding))
         end

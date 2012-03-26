@@ -2,7 +2,7 @@ Gem::Specification.new do |s|
   s.platform = Gem::Platform::RUBY
   s.name = "<%= args[0] %>"
   s.version = "0.0.1"
-  s.summary = "<%= answers[:summary] %>"
+  s.summary = "<%= answers["summary"] %>"
   s.description = "<%= answers[:description] %>"
 
   s.required_ruby_version = ">= 1.8.7"
