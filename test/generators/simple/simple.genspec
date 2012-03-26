@@ -1,0 +1,12 @@
+{
+  "name": "simple",
+  "version": "0.0.1",
+  "summary": "An easy to use generator.",
+  "description": "This thing should really not be very much trouble at all.",
+
+  "required_codegens_version": ">= 0.0.1",
+
+  "author": "Anthony Crumley",
+  "email": "anthony.crumley@gmail.com",
+  "homepage": "https://github.com/craftycode/codegens"
+}
