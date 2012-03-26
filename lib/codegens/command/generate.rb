@@ -24,10 +24,7 @@ module Codegens
       end
 
       def create_directory(relative_content_path, path)
-        while /arg(\d+)/.match(path)
-          path = path.gsub("arg#{$1}", template_args[$1.to_i])
-        end
-        path = File.join(relative_content_path, path)
+        path = File.join(relative_content_path, interpret(path))
         Dir.mkdir(Codegens.generation_path(path))
 
         return path
@@ -35,10 +32,8 @@ module Codegens
 
       def create_file(relative_template_path, relative_content_path, file_name)
         source_path = File.join(template_path, relative_template_path, file_name)
-        destination_path = Codegens.generation_path(File.join(relative_content_path, file_name))
+        destination_path = Codegens.generation_path(File.join(relative_content_path, interpret(file_name)))
         
-        args = self.template_args
-        answers = self.template_answers
         File.open(destination_path, 'w') do |f|
           f.puts(ERB.new(File.read(source_path)).result(binding))
         end
@@ -46,6 +41,13 @@ module Codegens
 
       def execute
         render_directory(CURRENT_DIRECTORY, CURRENT_DIRECTORY)
+      end
+
+      def interpret(name)
+        while /arg(\d+)/.match(name)
+          name = name.gsub("arg#{$1}", self.template_args[$1.to_i])
+        end
+        name
       end
 
       def render_directory(relative_template_path, relative_content_path)
